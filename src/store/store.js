@@ -10,8 +10,21 @@ const reducers = combineReducers({
   task: todoTaskReducer,
 });
 const middleWare = [thunk];
+
+let initialState = {
+  task: {
+    task: localStorage.getItem("TASK")
+      ? JSON.parse(localStorage.getItem("TASK"))
+      : [],
+  },
+};
+console.log(initialState);
 const store = configureStore(
-  { reducer: reducers },
+  {
+    reducer: reducers,
+    preloadedState: initialState,
+  },
+
   composeWithDevTools(applyMiddleware(...middleWare))
 );
 

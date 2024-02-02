@@ -26,11 +26,13 @@ const Todolist = () => {
         updatedList[editableIndex] = todoTask;
         localStorage.setItem("TASK", JSON.stringify(updatedList));
         setList(updatedList);
+        dispatch(todoWork(updatedList));
+        setEdit(false);
       } else {
-        dispatch(todoWork(todoTask));
         const updatedList = [...list, todoTask];
         localStorage.setItem("TASK", JSON.stringify(updatedList));
         setList(updatedList);
+        dispatch(todoWork(updatedList));
       }
       setTodoTask("");
     }
@@ -46,6 +48,7 @@ const Todolist = () => {
     updatedList.splice(index, 1);
     localStorage.setItem("TASK", JSON.stringify(updatedList));
     setList(updatedList);
+    dispatch(todoWork(updatedList));
   };
   return (
     <div>
@@ -67,12 +70,22 @@ const Todolist = () => {
         </button>
       </div>
       <div className="">
-        {list.map((item, index) => {
+        {task.map((item, index) => {
           return (
-            <div className="flex justify-around bg-green-400 mt-2">
-              <div className="">{item}</div>
-              <button onClick={() => handleEdit(index)}>Edit</button>
-              <button onClick={() => handleDelete(index)}>Delete</button>
+            <div className="flex justify-around mt-2">
+              <div className="w-[50%]">{item}</div>
+              <button
+                onClick={() => handleEdit(index)}
+                className="bg-blue-400 w-[60px] rounded-[5px]"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(index)}
+                className="bg-blue-400 w-[60px] rounded-[5px]"
+              >
+                Delete
+              </button>
             </div>
           );
         })}
